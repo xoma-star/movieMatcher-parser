@@ -7,7 +7,7 @@ const client = new PocketBase('https://pb.xoma-star.tk');
 
 
 async function main(){
-    for(let i = 10; i < 1000; i++){
+    for(let i = 387; i < 100000; i++){
         try{
             const movie = (await axios.get(`https://api.themoviedb.org/3/movie/${i}`, {params: {api_key: 'c8ae8a04674ddb8d64d4cb06205be86d', language: 'ru-RU'}})).data
             if(movie){
