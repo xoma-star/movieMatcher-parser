@@ -7,18 +7,11 @@ const client = new PocketBase('https://pb.xoma-star.tk');
 
 
 async function main(){
-    for(let i = 387; i < 100000; i++){
+    for(let i = 100000; i < 200000; i++){
         try{
             const movie = (await axios.get(`https://api.themoviedb.org/3/movie/${i}`, {params: {api_key: 'c8ae8a04674ddb8d64d4cb06205be86d', language: 'ru-RU'}})).data
             if(movie){
                 movie.screens = (await axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/images?include_image_language=en,null`, {params: {api_key: 'c8ae8a04674ddb8d64d4cb06205be86d'}})).data.backdrops
-                // const screens = []
-                // for(const v of movie.screens.slice(0, 4)){
-                //     const ext = v.file_path.split('.').pop()
-                //     const response = await axios.get(`https://image.tmdb.org/t/p/original${v.file_path}`, {responseType: 'arraybuffer'})
-                //     screens.push(`data:image/${ext};base64,${Buffer.from(response.data).toString('base64')}`)
-                // }
-                // console.log(movie)
                 const toPaste = {
                     imdb_id: movie.imdb_id,
                     tmdb_id: movie.id,
@@ -33,7 +26,7 @@ async function main(){
                     budget: movie.budget
                 }
                 // console.log(toPaste)
-                await client.records.create('movies', toPaste)
+                if(toPaste.screens.length > 0) await client.records.create('movies', toPaste)
                 console.log(`pasted ${movie.title} into Pocket`)
             }
         }catch (e) {}
